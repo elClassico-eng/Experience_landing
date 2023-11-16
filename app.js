@@ -130,3 +130,25 @@ sections.forEach((section) => {
     sectionObserver.observe(section);
     section.classList.add("section--hidden");
 });
+
+//Работа с img
+const imgs = document.querySelectorAll(".lazy-img");
+
+const observerImg = new IntersectionObserver(lazyImg, {
+    root: null,
+    threshold: 0.1,
+});
+
+function lazyImg(entries) {
+    if (entries[0].isIntersecting) {
+        entries[0].target.classList.remove("lazy-img");
+        const dataImg = entries[0].target.dataset.src;
+        entries[0].target.setAttribute("src", dataImg);
+    } else {
+        entries[0].target.classList.add("lazy-img");
+    }
+}
+
+imgs.forEach((img) => {
+    observerImg.observe(img);
+});
